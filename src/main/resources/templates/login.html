@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<h1>登录</h1>
+
+<form method="post">
+	<div>
+		姓名：<input type="text" value="admin" name="username"/><br>
+		密码：<input type="text" value="1" name="password"/><br>
+<!-- 		电话：<input type="text" name="phone"/><br>
+		邮箱：<input type="text" name="email"/><br>
+		日期：<input type="text" name="created"/><br> -->
+		<input id="login-sub" type="button" value="登录"/>
+	</div>
+</form>
+
+
+</body>
+	
+
+<script type="text/javascript">
+			//回调的URL ，即要访问的url，点了登录后，跳回到原来拦截之前的url.
+            var redirectUrl = '[[${redirect}]]';//回调url,谁跳转到经过不符合跳转到该页面，这就是谁的路径
+            console.log(redirectUrl);
+            function doLogin() {
+        /*         $.post("/user/login", $("form").serialize(),function(data){
+                    if (data.status == 200) {
+                        if (redirectUrl == "") {//跳转到首页
+                            location.href = "http://localhost:8081";
+                        //alert("首页");
+                        } else {//拦截器拦截的，跳回去，带着cookie
+                            location.href = redirectUrl;
+                        }
+                    } else {
+                        //alert("登录失败，原因是：" + data.msg);
+                    }
+                }); */
+                
+                //
+            	$.ajax({
+            		url: "/user/login",
+            		type : "get",
+            		data:$("form").serialize(),
+            		async: false,
+            		dataType: "json", 
+            		success: function(data){
+            	         if (data.status == 200) {
+                             if (redirectUrl == "") {//跳转到首页
+                                 location.href = "http://localhost:8081";
+                             //alert("首页");
+                             } else {//拦截器拦截的，跳回去，带着cookie
+                                 location.href = redirectUrl;
+                             }
+                         } else {
+                             //alert("登录失败，原因是：" + data.msg);
+                         }
+            		},
+            		error:function(){
+            			console.log("查询出现错误。");
+            		}
+            	}); 
+                
+                
+            }
+            $(function(){
+            	//点击登录执行。
+        	    $("#login-sub").click(function(){
+        	    	doLogin();
+                }); 
+ 
+            }); 
+</script>
+
+   
+
+</html>
+

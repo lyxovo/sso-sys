@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<h1>我是首页。</h1>
+
+<form>
+	<div>
+		姓名：<input type="text"  name="username"/><br>
+		密码：<input type="text"  name="password"/><br>
+<!-- 		电话：<input type="text" name="phone"/><br>
+		邮箱：<input type="text" name="email"/><br>
+		日期：<input type="text" name="created"/><br> -->
+		<input onclick="register()" type="button" value="注册"/>
+	</div>
+</form>
+
+
+</body>
+
+<script type="text/javascript">
+
+function register(){
+
+ 	$.ajax({
+		url: "/user/register",
+		data: $("form").serialize(),
+		dataType: "json", 
+		success: function(result){
+			if(result.status==200){
+				alert("测试成功");
+				location.href="/page/login";
+			}else{
+				alert("注册失败");
+			}
+			console.log(result)
+		},
+		error:function(){
+			console.log("查询出现错误。");
+		}
+		
+	}); 
+} 
+	
+</script>
+
+</html>
+
